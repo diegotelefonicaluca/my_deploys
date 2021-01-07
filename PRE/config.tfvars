@@ -13,7 +13,7 @@ db_kms_pass         = "testLuc4P4ss"
 #snapshot para Postgres Provisionada
 #snapshot_identifier = "brand-power-postgresql"
 #snapshot para Postgres Serverless
-snapshot_identifier     = "brand-power-postgresql-serverless"
+snapshot_identifier     = ""
 
 # Aurora Serverless
 db_engine_version       = "10.12"

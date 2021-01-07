@@ -1,5 +1,5 @@
-    bucket               = "mahou-brand-power-pre-admin"
+    bucket               = "luca-devops-test"
     key                  = "infra/PRE/terraform/terraform.tfstate"
     workspace_key_prefix = "mahou-brand-power"
-    dynamodb_table       = "mahou-brand-power-terraform-lock"
+    #dynamodb_table       = "mahou-brand-power-terraform-lock"
     region               = "eu-west-1"
