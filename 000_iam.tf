@@ -19,7 +19,7 @@ resource "aws_iam_policy" "s3_full_access" {
 
   policy      = templatefile("./iam_policies/AmazonS3FullAccess.tmpl", 
     { data_engineering_bucket_arn = format("%s", data.aws_s3_bucket.data_engineering_bucket.arn),
-      raw_bucket_arn = format("%s", data.aws_s3_bucket.raw_bucket.arn),
+      raw_bucket_arn = format("%s", aws_s3_bucket.raw_bucket.arn),
       account_id = format("%s", data.aws_caller_identity.current.account_id)
     }
   )

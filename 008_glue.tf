@@ -42,7 +42,7 @@ resource "aws_glue_connection" "rds_aurora_postgres_serverless" {
   physical_connection_requirements {
     availability_zone      = var.azs[0]
     security_group_id_list = [aws_security_group.rds_aurora_vpc_access.id]
-    subnet_id              = module.vpc.private_subnets[0]
+    subnet_id              = module.vpc.public_subnets[0]
   }
 }
 

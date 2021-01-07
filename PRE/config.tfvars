@@ -16,11 +16,11 @@ db_kms_pass         = "testLuc4P4ss"
 snapshot_identifier     = ""
 
 # Aurora Serverless
-db_engine_version       = "10.12"
+/*db_engine_version       = "10.12"
 db_name                 = "brand-power-serverless"
-enable_http_endpoint    = true
+enable_http_endpoint    = true*/
 publicly_accessible     = true
-db_engine_mode          = "serverless"
+/*db_engine_mode          = "serverless"
 db_backup_window        = ""
 db_maintenance_window   = ""
 db_replica_count        = "0"
@@ -31,9 +31,9 @@ scaling_configuration   = {
     seconds_until_auto_pause = 3600
     timeout_action           = "ForceApplyCapacityChange"
   }
-
+*/
 ############
 ### Glue ###
 ############
-connection_name = "brand-power-serverless"
-database        = "brand_power"
+connection_name = "brand-power"
+database        = "postgres"

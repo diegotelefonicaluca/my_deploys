@@ -33,6 +33,6 @@ data "aws_s3_bucket" "data_engineering_bucket" {
   bucket = format("%s-%s", var.s3_de_bucket_name, local.tags.project-name)
 }
 
-data "aws_s3_bucket" "raw_bucket" {
-  bucket = var.s3_raw_bucket_name
+resource "aws_s3_bucket" "raw_bucket" {
+  bucket = format("%s-%s", var.s3_raw_bucket_name, local.tags.project-name)
 }
