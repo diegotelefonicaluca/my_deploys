@@ -1,0 +1,5 @@
+    bucket               = "mahou-brand-power-admin"
+    key                  = "infra/PRO/terraform/terraform.tfstate"
+    workspace_key_prefix = "mahou-brand-power"
+    dynamodb_table       = "mahou-brand-power-terraform-lock"
+    region               = "eu-west-1"
