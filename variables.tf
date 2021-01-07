@@ -2,8 +2,8 @@ variable "tags" {
   description = "Tags que se utilizan en la creación de los recursos"
   type        = map(any)
   default = {
-    "Project"      = "ej201590"
-    "project-name" = "ej201590"
+    "Project"      = "dms201590"
+    "project-name" = "dms201590"
     "description"  = "Mahou Brand Power Digital - Migracion ETLs"
     "owner"        = "LUCA-dms"
     "terraform"    = true

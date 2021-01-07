@@ -13,8 +13,8 @@ module "db" {
 
   vpc_id                     = module.vpc.vpc_id
   # TODO - Aclarar con el equipo si desplegar la BBDD en subred pública o privada
-  subnets                    = module.vpc.private_subnets
-  #subnets                    = module.vpc.public_subnets
+  #subnets                    = module.vpc.private_subnets
+  subnets                    = module.vpc.public_subnets
   allowed_security_groups    = [aws_security_group.rds_aurora_vpc_access.id]
   publicly_accessible        = var.publicly_accessible
   vpc_security_group_ids     = [aws_security_group.my_dbs_access.id]
