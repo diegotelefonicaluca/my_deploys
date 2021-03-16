@@ -2,9 +2,12 @@
 
 #ARN of the role to assume
 role_arn='arn:aws:iam::758498799551:role/Brandpower-PRE-admin'
+#role_arn='arn:aws:iam::836858280965:role/Brandpower-Pro-admin'
+#role_arn='arn:aws:iam::424279608767:role/MahouDatalake-PRE-admin'
+#role_arn='arn:aws:iam::424279608767:role/DatalakePREBuild'
 
 #Identifier for the assumed role session
-role_session_name='mahou-pre-session'
+role_session_name='mahou-datalake-pre-session'
 
 profile_name='mahou-pre'
 

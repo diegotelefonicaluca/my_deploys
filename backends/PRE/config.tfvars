@@ -1,19 +1,23 @@
 ################
 ##### VPC ######
 ################
-cidr            = "10.123.0.0/16"
-private_subnets = ["10.123.1.0/24", "10.123.2.0/24"]
-public_subnets  = ["10.123.11.0/24", "10.123.12.0/24"]
+cidr            = "10.200.0.0/16"
+private_subnets = ["10.200.1.0/24", "10.200.2.0/24"]
+public_subnets  = ["10.200.11.0/24", "10.200.12.0/24"]
 
 #########################
 ### Aurora PostgreSQL ###
 #########################
-db_kms_pass             = "testLuc4P4ss"
-snapshot_identifier     = "brand-power-postgresql-serverless"
+db_pass         = "Pr0fu7ur0P4ss"
+
+#snapshot para Postgres Provisionada
+#snapshot_identifier = "profuturo-postgresql"
+#snapshot para Postgres Serverless
+#snapshot_identifier     = "profuturo-postgresql-serverless"
 
 # Aurora Serverless
 db_engine_version       = "10.12"
-db_name                 = "brand-power-serverless"
+db_name                 = "profuturodb-serverless"
 enable_http_endpoint    = true
 publicly_accessible     = true
 db_engine_mode          = "serverless"
@@ -28,8 +32,9 @@ scaling_configuration   = {
     timeout_action           = "ForceApplyCapacityChange"
   }
 
+
 ############
 ### Glue ###
 ############
-connection_name = "brand-power-serverless"
-database        = "brand_power"
+connection_name = "profuturodb_conn_serverless"
+database        = "profuturodb"

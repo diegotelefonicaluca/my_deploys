@@ -1,0 +1,5 @@
+    bucket               = "profuturo-infra"
+    key                  = "PRE/terraform.tfstate"
+    workspace_key_prefix = "terraform"
+    dynamodb_table       = "profuturo-lock"
+    region               = "eu-west-1"

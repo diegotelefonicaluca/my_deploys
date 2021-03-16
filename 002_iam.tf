@@ -1,4 +1,4 @@
-#----000_iam.tf----
+#----002_iam.tf----
 
 /*
   Definition of Policies and Roles 
@@ -15,11 +15,11 @@ IAM POLICIES
 resource "aws_iam_policy" "s3_full_access" {
   name        = format("AmazonS3FullAccess_%s_%s", local.tags.project-name, local.tags.env)
   path        = "/"
-  description = format("Allow full access just to %s-* bucket", data.aws_s3_bucket.data_engineering_bucket.id)
+  description = format("Allow full access just to %s-* bucket", aws_s3_bucket.data_engineering_bucket.id)
 
   policy      = templatefile("./iam_policies/AmazonS3FullAccess.tmpl", 
-    { data_engineering_bucket_arn = format("%s", data.aws_s3_bucket.data_engineering_bucket.arn),
-      raw_bucket_arn = format("%s", aws_s3_bucket.raw_bucket.arn),
+    { data_engineering_bucket_arn = format("%s", aws_s3_bucket.data_engineering_bucket.arn),
+      datalake_bucket_arn = format("%s", aws_s3_bucket.datalake_bucket.arn),
       account_id = format("%s", data.aws_caller_identity.current.account_id)
     }
   )

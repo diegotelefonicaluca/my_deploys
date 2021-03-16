@@ -2,9 +2,9 @@ variable "tags" {
   description = "Tags que se utilizan en la creación de los recursos"
   type        = map(any)
   default = {
-    "Project"      = "dms201590"
-    "project-name" = "dms201590"
-    "description"  = "Mahou Brand Power Digital - Migracion ETLs"
+    "Project"      = "ej211602"
+    "project-name" = "ej211602"
+    "description"  = "Telefonica ProFuturo - Unidad de Datos 2021"
     "owner"        = "LUCA-dms"
     "terraform"    = true
   }
@@ -22,20 +22,54 @@ variable "azs" {
   default     = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
 }
 
+#############################
+### PROFUTURO-REPO-FE TED ###
+#############################
+variable "ec2_repo_fe_region" {
+  description = "Región de la EC2 de TED desde la que se ejecuta el aws s3 sync"
+  type        = string
+  default     = "eu-west-1"
+}
+
+variable "ec2_repo_fe_accountid" {
+  description = "Account-Id de la EC2 de TED desde la que se ejecuta el aws s3 sync"
+  type        = string
+  default     = "339916744372"
+}
+
+variable "ec2_repo_fe_instanceid" {
+  description = "Instance-Id de la EC2 de TED desde la que se ejecuta el aws s3 sync"
+  type        = string
+  default     = "i-0c8284594f654b4c3"
+}
+
 ##########
 ### S3 ###
 ##########
 variable "s3_de_bucket_name" {
-  description = "Prefix name for the Data Engineering bucket (random digit will be added to the bucket name to make it unique)"
+  description = "Prefix name for the Data Engineering bucket ('project-name' and 'env', will be added to the bucket name to make it unique)"
   type        = string
   default     = "data-engineering"
 }
 
-variable "s3_raw_bucket_name" {
-  description = "Nombre del bucket para los datos en RAW"
-  type        = string
-  default     = "brandpower-pre-raw"
+variable "de_s3_bucket_dirs" {
+  description = "Dirs structure to be created into the Data Engineering Bucket"
+  type    = list(string)
+  default = ["glue-etl-jobs", "libs"]
 }
+
+variable "s3_datalake_bucket_name" {
+  description = "Prefix name for the Datalake bucket ('project-name' and 'env', will be added to the bucket name to make it unique)"
+  type        = string
+  default     = "profuturo-datalake"
+}
+
+variable "datalake_s3_bucket_dirs" {
+  description = "Dirs structure to be created into the Datalake Bucket"
+  type    = list(string)
+  default = ["pre-in", "in", "raw", "pre-proc", "proc", "staging"]
+}
+
 
 ################
 ##### VPC ######
@@ -67,18 +101,19 @@ variable "public_subnets" {
 variable "db_name" {
   description = "Nombre de la BBDD"
   type        = string
-  default     = "brand-power"
+  default     = "profuturodb"
 }
 
 variable "db_master_username" {
   description = "Nombre del usuario master de la BBDD"
   type        = string
-  default     = "dbmahouadmin"
+  default     = "profuturoadmin"
 }
 
-variable "db_kms_pass" {
+variable "db_pass" {
   description = "Password de la BBDD"
   type        = string
+  default     = "Pr0fu7ur0P4ss"
 }
 
 variable "db_engine" {
@@ -171,37 +206,106 @@ variable "scaling_configuration" {
   default     = {}
 }
 
+###########################
+### SSM Parameter Store ###
+###########################
+variable "ssm_parameters_glue" {
+  description = "Map de Maps donde key=Parameter_ID y value=map conteniendo un conjunto de configuraciones para cada Parameter utilizados en Jobs de Glue"
+  type        = map(map(string))
+  default     = {}
+}
+
 ############
 ### Glue ###
 ############
-
-# Prefijo para los buckets legacy de RAW (ya creados en fases anteriores)
-variable "raw_data_bucket" {
-  description = "Bucket Data Name"
-  type        = string
-  default     = "bpd-raw"
-}
-
-variable "db_catalog" {
-  description = "DB Catalog name"
-  type        = string
-  default     = "landing"
-}
-
-variable "crawler" {
-  description = "Crawler"
-  type        = string
-  default     = "landing"
+variable "catalog_databases" {
+  description = "Map of Maps where key=catalog_db identifier and value=map containing a set of configs for each database"
+  type        = map(map(string))
+  default     = {
+    db1 = {
+      prefix_name = "profuturo_catalog_db"
+      location    = ""
+    }
+  }
 }
 
 variable "connection_name" {
   description = "Nombre de la conexión"
   type        = string
-  default     = "brand-power"
+  default     = "profuturodb_conn"
 }
 
 variable "database" {
-  description = "Nombre de la BBDD a la que conectarse"
+  description = "Nombre de la BBDD (Aurora) a la que conectarse desde la conexión de Glue"
   type        = string
-  default     = "brand-power"
+  default     = "profuturodb"
+}
+variable "catalog_crawlers" {
+  description = "Map of Maps where key=Crawler identifier and value=map containing a set of configs for each crawler"
+  type        = map(map(string))
+  default  = {}
+}
+
+variable "python_glue_jobs" {
+  description = "Map of Maps where key=Glue Job Identifier and value=map containing a set of configs for each Glue Job"
+  type        = map(map(string))
+  default  = {}
+}
+
+variable "spark_glue_jobs" {
+  description = "Map of Maps where key=Glue Job Identifier and value=map containing a set of configs for each Glue Job"
+  type        = map(map(string))
+  default  = {
+  }
+}
+
+variable "glue_workflows" {
+  description = "Map of Maps where key=Workflow identifier and value=map containing a set of configs foe each Glue Workflow"
+  type        = map(map(string))
+  default = {}
+}
+
+variable "glue_triggers_scheduled_jobs_action" {
+  description = "Map of Maps where key=Glue Trigger Identifier and value=map containing a set of configs for each Glue trigger (with action on Glue Jobs and Scheduled executions)"
+  type        = map(map(any))
+  default     = {}
+}
+
+variable "glue_triggers_jobs_action_crawlers_condition" {
+  description = "Map of Maps where key=Glue Trigger Identifier and value=map containing a set of configs for each Glue trigger (with action on Glue Jobs and Crawlers based conditions)"
+  type        = map(map(any))
+  default     = {
+    
+  }
+}
+
+variable "glue_triggers_crawlers_action_jobs_condition" {
+  description = "Map of Maps where key=Glue Trigger Identifier and value=map containing a set of configs for each Glue trigger (with action on Glue Crawlers and Jobs based conditions)"
+  type        = map(map(any))
+  default     = {
+  }
+}
+
+variable "glue_triggers_crawlers_action_crawlers_condition" {
+  description = "Map of Maps where key=Glue Trigger Identifier and value=map containing a set of configs for each Glue trigger (with action on Glue Crawlers and Crawler based conditions)"
+  type        = map(map(any))
+  default     = {
+    
+  }
+}
+
+variable "glue_triggers_jobs_action_jobs_condition" {
+  description = "Map of Maps where key=Glue Trigger Identifier and value=map containing a set of configs for each Glue trigger (with action on Glue Jobs and Jobs based conditions)"
+  type        = map(map(any))
+  default     = {
+
+  }
+}
+
+variable "glue_triggers_on_demand_crawlers_action" {
+  description = "Map of Maps where key=Glue Trigger Identifier and value=map containing a set of configs for each Glue trigger (with action on Glue Crawlers and On-demand executions)"
+  type        = map(map(any))
+  default     = {
+    
+  }
 }

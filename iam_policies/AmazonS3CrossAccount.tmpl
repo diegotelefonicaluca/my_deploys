@@ -1,0 +1,21 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "s3:Get*",
+                "s3:List*"
+            ],
+            "Resource": [
+                "${cross_account_bucket_path1_arn}",
+                "${cross_account_bucket_path1_arn}/*",
+                "${cross_account_bucket_path2_arn}",
+                "${cross_account_bucket_path2_arn}/*",
+                "${cross_account_bucket_path3_arn}",
+                "${cross_account_bucket_path3_arn}/*"
+            ]
+        }
+    ]
+}
