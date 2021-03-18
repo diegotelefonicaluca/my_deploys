@@ -2,8 +2,8 @@ variable "tags" {
   description = "Tags que se utilizan en la creación de los recursos"
   type        = map(any)
   default = {
-    "Project"      = "ej211602"
-    "project-name" = "ej211602"
+    "Project"      = "PROFUTURO-TED"
+    "project-name" = "PROFUTURO-TED"
     "description"  = "Telefonica ProFuturo - Unidad de Datos 2021"
     "owner"        = "LUCA-dms"
     "terraform"    = true
